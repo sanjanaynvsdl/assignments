@@ -16,6 +16,53 @@
   Once you've implemented the logic, test your code by running
 */
 
-class Calculator {}
+
+class Calculator {
+  constructor() {
+    this.result = 0; // Initialize result to 0
+  }
+  add(num) {
+    this.result+=num;
+  }
+  subtract(num) {
+    this.result-=num;
+  } 
+  multiply(num) {
+    this.result*=num;
+  }
+  divide(num) {
+    if(num===0) {
+      throw new Error("Cannot divide number by 0");
+      
+    }
+    this.result/=num;
+  }
+  clear() {
+    this.result=0;
+  }
+  getResult() {
+    return this.result;
+  }
+  calculate(exp) {
+    const TrimmedExp = exp.replace(/[\s]+/g, "");
+    let isAlphabetic = /^[A-Za-z]+$/.test(TrimmedExp);
+    if(isAlphabetic) {
+      throw new Error("Parameter is not a number");
+    }
+    try{
+      this.result=eval(TrimmedExp);
+      if(this.result=== Infinity || this.result=== -Infinity) {
+        throw new Error("Cannot divide by 0")
+      }
+    } catch(err) {
+      throw new Error("Invalid Mathematical Expression")
+    }
+  }
+}
+
+const exp="Snjana"
+let isAlphabetic = /^[A-Za-z]+$/.test(exp);
+console.log(exp.replace(/[\s]+/g, ""));
+console.log(isAlphabetic)
 
 module.exports = Calculator;

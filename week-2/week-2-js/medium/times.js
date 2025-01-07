@@ -9,5 +9,24 @@ There is no automated test for this one, this is more for you to understand time
 */
 
 function calculateTime(n) {
-    return 0.01;
+    const startTime = Date.now()
+
+    let sum=0;
+    for(let i=1;i<=n;i++) {
+        sum+=i;
+    }
+    const endTime = Date.now();
+    return endTime-startTime;
 }
+// console.log(date.getSeconds());
+// const date = new Date();
+
+// using this is incorrect
+const date = new Date();
+const startTime = date.now()
+// The Date object does not have a now() method; instead, Date.now() 
+// is a static method and should be called directly on the Date class, not on an instance of the Date object.
+
+
+const secondsToCal100=calculateTime(1000000000);
+console.log(secondsToCal100);

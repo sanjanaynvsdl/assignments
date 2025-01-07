@@ -11,7 +11,50 @@
 */
 
 class Todo {
+  constructor() {
+    this.list=[];
+  }
+  add(todo) {
+    this.list.push(todo);
+    return true;
+  }
+  //test - cases want to silently fail not write the invalid or handle issues!
+  remove(indexOfTodo) {
+    if(indexOfTodo>=0 && indexOfTodo<this.list.length) {
+      this.list.splice(indexOfTodo,1);
+      return true;
+    }
+    // } else{
+    //   throw new Error("Invalid index of todo")
+    // }
+  }
 
+  update(index,updatedTodo ) {
+    if(index>=0 && index<this.list.length) {
+      this.list[index]=updatedTodo;
+      return true;
+    } 
+    // else {
+    //   throw new Error("Invalid index to update")
+    // }
+    
+  }
+
+  getAll() {
+    return this.list;
+  }
+
+  get(indexOfTodo) {
+    if(indexOfTodo>=0 && indexOfTodo<this.list.length) {
+      return this.list[indexOfTodo];
+    }
+    return  null;
+  }
+
+  clear() {
+    this.list=[];
+    return true;
+  }
 }
 
 module.exports = Todo;
