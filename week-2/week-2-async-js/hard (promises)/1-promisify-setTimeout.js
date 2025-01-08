@@ -3,6 +3,15 @@
 */
 
 function wait(n) {
+    return new Promise((res,rej)=> {
+        if(n<=0) {
+            rej("n should be positive!")
+        } else {
+            setTimeout(res,n*1000);
+        }
+    });
 }
 
+
 module.exports = wait;
+
