@@ -1,0 +1,200 @@
+<html>
+    <head>
+        <title>Quiz</title>
+    </head>
+    <style>
+        body{
+            /* background-color: ;
+             */
+             background: linear-gradient(to right, #3f6283, #ffffff);
+             font-family: sans-serif;
+        }
+        body h1{
+            color: #3f6283;
+
+        }
+        #card{
+            text-align: center;
+            position: fixed;
+            top:20%;
+            left:50%;
+            transform: translateX(-50%); 
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            
+        }
+        #options{
+            display: flex;
+            /* flex-direction: column; */
+            /* align-items: center; */
+            justify-content: center;
+        }
+    </style>
+    <body>
+
+        <div class="card" id="card">
+            <h1>Let's test yr knowledge techy!</h1>
+            <div id="question">
+                <h3> Quesiton : Which lang do you prefer?</h3>
+                <div id="options">
+                    <!-- <div id="option-1">
+                        <input type="radio" id="html" name="fav_language" value="HTML">
+                        <label for="html">HTML</label>
+                    </div>
+                    <div id="option-2">
+                        <input type="radio" id="Java" name="fav_language" value="Java">
+                        <label for="Java">Java</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="js" name="fav_language" value="Java Script">
+                        <label for="js">Java Script</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="c" name="fav_language" value="C/C++">
+                        <label for="radio">C/C++</label>
+                    </div> -->
+                </div>
+                <br>
+                <button onclick="recordAns()">Move to Next Question</button>
+            </div>
+            <br></br>
+            <div id="result"></div>
+
+        </div>
+        <script>
+            // function recordAns() {
+            //     const optionsDiv = document.getElementsByName('fav_language');
+            //     console.log(optionsDiv);
+
+            //     for(let i=0;i<optionsDiv.length;i++) {
+            //         if(optionsDiv[i].checked) {
+            //             document.getElementById('result').innerHTML = "Option Selected : "+optionsDiv[i].value;
+            //         }
+
+            //     }
+            // }
+            //as of now I've hard-coded the quiz template now, I'll import the question and dynamically append it to the DOM
+
+
+            const quizData = [{
+            "question": "Which language runs in a web browser?",
+            "a": "Java",
+            "b": "C",
+            "c": "Python",
+            "d": "JavaScript",
+            "correct": "d",
+        },
+        {
+            "question": "What does CSS stand for?",
+            "a": "Central Style Sheets",
+            "b": "Cascading Style Sheets",
+            "c": "Cascading Simple Sheets",
+            "d": "Cars SUVs Sailboats",
+            "correct": "b",
+        },
+        {
+            "question": "What does HTML stand for?",
+            "a": "Hypertext Markup Language",
+            "b": "Hypertext Markdown Language",
+            "c": "Hyperloop Machine Language",
+            "d": "Helicopters Terminals Motorboats Lamborginis",
+            "correct": "a",
+        },
+        {
+            "question": "What year was JavaScript launched?",
+            "a": "1996",
+            "b": "1995",
+            "c": "1994",
+            "d": "none of the above",
+            "correct": "b",
+        },
+// you can add more quiz here
+]
+            //1. Import the data
+            //2. Get the access to quesiotn, Options container
+            //3. Get the currQuestionIdx 
+            //4. Append the Question
+            //5. Loop throught the options and append them to,
+            // import {quizData} from './data.js'
+
+            const questionContainer = document.getElementById('question');
+            const optionsContainer = document.getElementById('options');
+            let currQuestionIdx = 0;
+
+            function loadQuestion() {
+                console.log(quizData);
+                const currQuestion = quizData[currQuestionIdx];
+                // questionContainer.innerHTML=`<h3>${currQuestion.question}</h3>`
+                //(by doing this, all the question container will be replaced instead change only h3)
+
+                questionContainer.querySelector('h3').textContent=currQuestion.question
+                console.log(optionsContainer)
+                // optionsContainer.innerHTML='';
+                
+
+                optionsContainer.innerHTML = "";
+
+                for(let [key,value] of Object.entries(currQuestion)) {
+                    if(['a','b','c','d'].includes(key)) {
+                        console.log("Key, value : "+key, value)
+                        optionsContainer.innerHTML += `
+                        <div> 
+                            <input type="radio" id="${key}" name="quiz_option" value="${key}">
+                            <label for="${key}">${value}</label>
+                        </div>`;
+                        // <input type="radio" id="Java" name="fav_language" value="Java">
+                    }
+                }
+                console.log(optionsContainer)
+            }
+            loadQuestion();
+
+
+            //1. Get the input and store the correct anser then move to next question
+            //2. If done, call the scoer() function
+            let userAns=[];
+            function recordAns() {
+                const SelectedOPtion = document.querySelector('input[name="quiz_option"]:checked');
+                console.log(SelectedOPtion);
+
+                if(SelectedOPtion==null) {
+                    alert("please select a option");
+                    return;
+                }
+                userAns.push(SelectedOPtion.value);
+                currQuestionIdx++;
+                if(currQuestionIdx<quizData.length) {
+                    loadQuestion();
+                } else {
+                    finalScore();
+                }
+            }
+
+            function finalScore() {
+                let score=0;
+                for(let i=0;i<userAns.length;i++) {
+                    if(userAns[i]==quizData[i].correct) {
+                        score++;
+                    }
+                }
+
+                const parentDiv = document.getElementById('card');
+                const scoreDiv = document.createElement('div')
+                scoreDiv.setAttribute('id', 'card');
+
+                const h3Data = document.createElement('h3');
+                h3Data.textContent=`You have scored  ${score} out of ${quizData.length}`
+
+                scoreDiv.appendChild(h3Data);
+                parentDiv.replaceWith(scoreDiv);
+            }
+
+            //1. Wrote the code from scratch by my own, hard-codede question then by 
+            // asking help with chat gpt understood how to dynamically add this
+            //---------finally completed thi!!!------lesss go---- (Keep doingg)
+        </script>
+    </body>
+    
+</html>
