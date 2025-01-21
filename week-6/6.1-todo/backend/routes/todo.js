@@ -1,6 +1,7 @@
 let todos = []; // in memory space
 
 export async function getAllTodo (req, res, next){
+    
     //  write here
 }
 

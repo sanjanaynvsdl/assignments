@@ -11,10 +11,31 @@ const app = express();
 // You have been given a numberOfRequestsForUser object to start off with which
 // clears every one second
 
+
 let numberOfRequestsForUser = {};
 setInterval(() => {
     numberOfRequestsForUser = {};
 }, 1000)
+
+app.use(function(req,res,next) {
+  const userID= req.headers["user-id"];
+  if(numberOfRequestsForUser[userID]) {
+    numberOfRequestsForUser[userID]++;
+      if(numberOfRequestsForUser[userID] > 5) {
+        res.status(404).json({
+          msg:"NO ENTRY!, please try again after some time!"
+        })
+      } else {
+        next();
+      }
+  }
+
+  else {
+    numberOfRequestsForUser[userID] = 1;
+    next();
+  }
+})
+
 
 app.get('/user', function(req, res) {
   res.status(200).json({ name: 'john' });
