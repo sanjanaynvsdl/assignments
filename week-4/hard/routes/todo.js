@@ -9,8 +9,9 @@ router.post('/',adminMiddleware,  async(req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const done = req.body.done;
-    const {userId} = req.userId;
-
+    // const{ userId} = req; //this is de-structure or
+    const userId = req.userId;
+    // console.log(userId);
 
     console.log("The user-details are "+ title + description + done + userId);
     try {
@@ -61,9 +62,28 @@ router.put('/:id', adminMiddleware, async(req, res) => {
 
 });
 
-//TODO:
-router.delete('/', adminMiddleware, (req, res) => {
+//Delete all todo's of  a user!
+router.delete('/', adminMiddleware, async(req, res) => {
     // Implement delete todo logic
+    const {userId} = req;
+
+    try {
+        await Todo.deleteMany({
+            userId:userId,
+        })
+
+        return res.json({
+            msg:"Deleted all the todo's of this user!"
+        })
+
+    } catch(err) {
+        return res.status(500).json({
+            msg:"Internal server error "+ err,
+        })
+
+    }
+
+
 
 
 });
@@ -88,15 +108,16 @@ router.delete('/:id', adminMiddleware, async(req, res) => {
 });
 
 
-//TODO : NOt-working
+//Get all todo's of a user,
 router.get('/', adminMiddleware, async(req, res) => {
     // Implement fetching all todo logic
-    const userId = req.userId;
+    const id = req.userId;
+    console.log(id);
     try {
         const userTodos = await Todo.find({
-            userId:userId
+            userId:id
         })
-
+        console.log(userTodos);
         return res.json({
             todos:userTodos,
             msg:"Fetched all the todo's of the user"
@@ -108,7 +129,7 @@ router.get('/', adminMiddleware, async(req, res) => {
     }
 });
 
-
+//get particular todo by id,
 router.get('/:id', adminMiddleware, async(req, res) => {
     // Implement fetching todo by id logic
     const todoId = req.params.id;

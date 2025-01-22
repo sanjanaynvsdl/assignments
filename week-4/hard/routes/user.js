@@ -122,6 +122,7 @@ router.get('/todos', userMiddleware, async(req, res) => {
 
 
 //TODO : Need to fix this, on logout
+//for this we blacklist the quiriess
 router.post('/logout', userMiddleware, (req, res) => {
     // Implement logout logic
     try {
