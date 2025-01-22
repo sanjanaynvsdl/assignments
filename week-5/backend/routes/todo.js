@@ -2,13 +2,13 @@
 const {Todo} = require("../db/index");
 const {Router } = require("express");
 const router = Router()
-const {authMiddleware} = require("../middleware/user");
+const authMiddleware = require("../middleware/user");
 const {z} = require('zod');
 
-//get all todo's
+//get todo
 router.get("/:id", authMiddleware , async(req,res)=> {
     const todoId = req.params.id;
-    if(!id) {
+    if(!todoId) {
         return res.json({
             msg:"Please provide the id of todo,"
         })
@@ -38,7 +38,7 @@ router.get("/:id", authMiddleware , async(req,res)=> {
 })
 
 
-//get a single todo
+//get all todo
 router.get("/",authMiddleware,  async(req,res)=> {
     const userId = req.userId;
     try {
