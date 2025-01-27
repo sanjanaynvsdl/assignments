@@ -32,6 +32,16 @@ router.post("/signup", async(req,res)=> {
 
         const hashedPass = await bcrypt.hash(password, 5);
 
+        const findUser = await User.findOne({
+            email:email,
+        })
+
+        if(findUser) {
+            return res.status(403).json({
+                message:"User with this email already exists!"
+            })
+        }
+
         await User.create({
             name:name,
             email:email,
@@ -52,10 +62,11 @@ router.post("/signup", async(req,res)=> {
 
 router.post("/signin", async(req,res)=> {
      const responseObj = z.object({
-        name:z.string(),
-        email:z.string(),
+        email:z.string().email(),
         password:z.string()
      })
+
+     
 
      const {success, data, error} = responseObj.safeParse(req.body);
 
@@ -67,7 +78,7 @@ router.post("/signin", async(req,res)=> {
      }
 
      try {
-        const name = req.body.name;
+
         const email = req.body.email
         const password = req.body.password;
         

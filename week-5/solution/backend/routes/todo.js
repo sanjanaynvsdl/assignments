@@ -5,6 +5,7 @@ const { authenticateJwt } = require("../middleware/user");
 const router = express.Router();
 router.use(authenticateJwt);
 
+
 router.post("/", async (req, res) => {
     const createPayload = req.body;
     console.log(req.userId);
