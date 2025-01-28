@@ -1,5 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
+import {Link, useNavigate} from "react-router-dom";
 
 
 const SignUp = ()=> {
@@ -7,6 +8,7 @@ const SignUp = ()=> {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const inpStyle = {padding:4, margin:4, width:200};
+    const navigate = useNavigate();
 
 
     async function handleSignup() {
@@ -20,6 +22,9 @@ const SignUp = ()=> {
             const response = await axios.post("http://localhost:3000/auth/signup", datoToSend);
 
             console.log(response.data);
+            if(response.status==200) {
+                navigate("/signin");
+            }
         } catch (error) {
             console.log(error);
             
@@ -28,7 +33,18 @@ const SignUp = ()=> {
 
    
     return(
-        <div style={{backgroundColor:"lightgray", padding:20, width:220, borderRadius:10,  margin:10}}>
+        <div style={
+            
+            {
+                backgroundColor:"#B3B792", 
+                borderRadius:10, 
+                width:250, 
+                padding:20,
+                marginTop:30,
+                marginLeft: "auto",
+                marginRight: "auto"
+            }
+        }>
             <h2>SignUp to add todo!</h2>
 
             <div style={{display:"flex", flexDirection:"column", justifyContent:"center"}}>
@@ -62,10 +78,9 @@ const SignUp = ()=> {
             <button 
                 style={{padding:4, margin:4, width:210}}
                 onClick={()=>handleSignup()}>
-                
                 Sign UP
             </button>
-
+            <p>Already have an account?<Link to="/signin">Login</Link></p>
         </div>
     )
 }

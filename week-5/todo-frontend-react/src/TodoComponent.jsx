@@ -1,4 +1,6 @@
+
 import axios from "axios";
+import { MdEdit , MdDelete, MdAdd} from "react-icons/md";
 
 const TodoComponent = ({id, title, description, isDone, getTodos})=> {
 
@@ -11,6 +13,7 @@ const TodoComponent = ({id, title, description, isDone, getTodos})=> {
                     token:localStorage.getItem('token')
                 }
             })
+            getTodos();
             
 
             console.log(response.data);
@@ -19,14 +22,26 @@ const TodoComponent = ({id, title, description, isDone, getTodos})=> {
             
         }
     }
+
+   
+        const styleBtn = {
+            padding: '2px 4px',  
+            fontSize: '12px',  
+            height: '24px', 
+            width: '30px' , 
+            margin:'4px',
+            marginTop:"20"
+        }
+        
     return (
-        <div style={{backgroundColor:"lightgray", padding:10,margin:10, width:200 }}>
-            <h2>{title}</h2>
-            <p>{description}</p>
-            {isDone ? <p>Status: Done</p> : <p>Status : Not yet!</p>}
+        <div style={{backgroundColor:"#725C3A", padding:6,margin:10, width:150, display:'flex', color:"white", borderRadius:8 }}>
+            <p style={{marginTop:8, marginRight:3}}>{title}</p>
+            {/* <p>{description}</p> */}
+            {/* {isDone ? <p>Status: Done</p> : <p>Status : Not yet!</p>} */}
             <div style={{display:"flex"}}>
-                <button style={{margin:3}} >Edit</button>
-                <button style={{margin:3}} onClick={()=> handleDelete(id)}>Delete</button>
+                <button style={styleBtn} ><MdAdd /></button>
+                <button style={styleBtn} ><MdEdit /></button>
+                <button style={styleBtn} onClick={()=> handleDelete(id)}><MdDelete /></button>
             </div>
         </div>
     )

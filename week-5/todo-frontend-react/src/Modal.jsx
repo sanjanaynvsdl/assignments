@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const Modal = ({isOpen, onClose, })=> {
+const Modal = ({isOpen, onClose,getTodos })=> {
     if(!isOpen) return;
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -27,6 +27,7 @@ const Modal = ({isOpen, onClose, })=> {
                 }
             });
             console.log(response.data);
+            getTodos();
 
         } catch (error) {
             console.log(error);
@@ -37,7 +38,7 @@ const Modal = ({isOpen, onClose, })=> {
 
 
     return (
-        <div style={{backgroundColor:"lightGray", padding:10, borderRadius:10, maringTop:10, width:220}}>
+        <div style={{backgroundColor:"#B3B792", padding:10, borderRadius:10, maringTop:10, width:220}}>
             
             <div style={{display:"flex", flexDirection:"column", justifyContent:"center"}}>
                 <h1>Todo Data ;)</h1>

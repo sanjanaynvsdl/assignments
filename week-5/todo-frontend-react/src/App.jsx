@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
 import "./App.css"
 import SignUp from "./SignUp"
-import TodoComponent from "./TodoComponent"
+import Layout from "./Layout";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import TodoPage from "./TodoPage";
 import SignIn from "./SignIn";
-import Modal from "./Modal";
-import axios from "axios";
+import ErrorPage from "./ErrorPage";
 
 function App() {
   const [isToken, setIsToken] = useState(false);
-  const [isModalOpen, setModalOpen]  = useState(false);
-  const [todos, setTodos] = useState([]);
+  
   
   function userLoggedIn() {
     const token = localStorage.getItem('token');
@@ -24,59 +24,27 @@ function App() {
 
   useEffect(()=> {
     userLoggedIn();
-    getTodos();
     
-  },[])
-
-  //TODO :This is causing infinte renders
-  // useEffect(()=> {
-  //   getTodos();
-  // },[todos])
-
-  async function getTodos() {
-    try {
-      const response = await axios.get("http://localhost:3000/todos/", { 
-        headers : {
-        token:localStorage.getItem('token')
-        }
-      })
-
-      setTodos(response.data.todos);
-    } catch (error) {
-      console.log("There was an error in fetching todo's" + error)
-      
-    }
-    console.log(todos);
-  }
-
+  },[isToken]);
 
   return (
     <>
-      <h1>This is a TODO- FULL Stack application!</h1>
 
-       {isToken ? null : <SignUp/>} 
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+        {isToken ? <Route path="/" element={<TodoPage/>}/> : <Route path="/" element={<SignUp/>}/> } 
+        <Route path="/signin" element={<SignIn/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="*" element={<ErrorPage/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+
+       
       {/* <SignIn/> */}
       
-      <div>
-        {isModalOpen ? null :<button
-          onClick={()=> setModalOpen(true)}
-          >Add TODO!</button>}
-        
-      {isModalOpen && <Modal isOpen ={isModalOpen} onClose={()=> setModalOpen(false)}/>}
-      {/* <TodoComponent/> */}
 
-      {todos.map((todo)=> (
-        <TodoComponent
-          key={todo._id}
-          id= {todo._id}
-          title={todo.title}
-          description={todo.description}
-          isDone={todo.isDone}
-          fn = {getTodos}
-        />
-      ))}
-
-      </div>
       
     </>
   )
@@ -84,9 +52,4 @@ function App() {
 
 export default App
 
-//Render getTodo's when ever todos array changes
-//Things to improve :
-//1. Fetch todo's after every update edit update, delete, 
-//2. Make changes in current todo's than fetching every time from backend
-//3. IMplement Update and loguout functionality,
-//4. Make the UI a bit better
+
