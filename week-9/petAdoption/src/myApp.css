@@ -15,7 +15,7 @@
   
   .form {
   
-    background-color: #c59771bd;
+    background-color: rgba(173, 216, 200, 0.6);
     max-width: 550px;
     margin: 20px auto;
     padding: 30px;
@@ -63,7 +63,7 @@
     font-family: inherit;
   }
   
-  button {
+  button, .inputSub {
   
     padding: 10px;
     background-color: #335624;
@@ -82,7 +82,7 @@
     border: 1px solid #335624;
     margin: 20px auto;
     width: 65%;
-    background-color: #fff;
+    background-color: rgba(173, 216, 200, 0.6);
     border-collapse: collapse;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.4);
     ;
@@ -99,14 +99,20 @@
   }
   
   tr {
-    background-color: #c59771bd;
+    background-color: rgba(173, 216, 200, 0.6);
   }
   
   small {
   
     color: red;
-    font-style: italic;
     float: right;
     margin-top: 4px;
+    
+  }
   
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    font-style: italic;
   }

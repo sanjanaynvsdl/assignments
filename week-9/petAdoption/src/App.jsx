@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import Header from './components/Header';
 import PetAdoptionForm from './components/PetAdoptionForm';
 import "./myApp.css";
 
+import AdopterData from "./components/AdopterData"
+
 
 const App = () => {
+  const [submissions, setSubmissions] = useState([]);
   return (
     <div
       style={{
@@ -12,9 +16,14 @@ const App = () => {
         backgroundSize: "cover"
       }}
     >
-      <Header message={"Pet Adoption Form"} />
-      <PetAdoptionForm />
+      <Header />
+      <PetAdoptionForm  setSubmissions = {setSubmissions} submissions ={submissions}/>
+      <AdopterData submissions={submissions}/>
+
     </div>
   );
 };
 export default App;
+
+
+//Fix the error issues,
