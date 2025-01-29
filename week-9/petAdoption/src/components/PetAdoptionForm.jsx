@@ -42,9 +42,8 @@ const PetAdoptionForm = ({setSubmissions, submissions}) => {
   }
 
   const handleSubmit = (event)=> {
-
-    if(!validateErrors()) return;
     event.preventDefault();
+    if(!validateErrors()) return;
     console.log(`This is the petName ${petName}`);
     console.log(`This is the petType ${petType}`);
     console.log(`This is the breed of it ${breed}`);

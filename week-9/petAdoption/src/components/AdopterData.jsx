@@ -16,7 +16,6 @@ const AdopterData = ({submissions})=>{
           </thead>
           <tbody>
             {submissions && submissions.map((data, index)=>(
-              console.log("This is the form data",data),
               <tr key={index}>
                 <td>{data.petName}</td>
                 <td>{data.petType}</td>
