@@ -26,4 +26,3 @@ const App = () => {
 export default App;
 
 
-//Fix the error issues,
