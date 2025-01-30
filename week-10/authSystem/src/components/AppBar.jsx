@@ -1,8 +1,17 @@
 import React from 'react'
+import "../App.css"
+import { useNavigate } from 'react-router-dom'
 
-const AppBar = () => {
+const AppBar = ({username}) => {
+  const navigate = useNavigate();
   return (
-    <div>AppBar</div>
+    <div className='app-bar'>
+      <h1>Auth System demo</h1>
+      <div className='user-section'>
+        <div>Welcome, {username}!</div>
+        <button onClick={()=> navigate("/login")}>Logout</button>
+      </div>
+    </div>
   )
 }
 
