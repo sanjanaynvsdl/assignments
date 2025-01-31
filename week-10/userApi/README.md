@@ -20,3 +20,11 @@ Create a React component that fetches random user data using the `https://random
 ## Refecrence UI
 
 ![Image](https://utfs.io/f/A8JZzw0Laf9jyvMCIikuNmbLHSZhjdl15eEqAOaxiK6o7wRp)
+
+
+# Understaning about,
+1. Fetching data from API using axios --done
+2. Learn about the GRID
+3. Learn about the pagination
+4. On, click loadmore more user-profiles will get added!
+
